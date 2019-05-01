@@ -1,6 +1,5 @@
 package com.lv.learn.scala
 
-import org.apache.avro.generic.GenericData.StringType
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row}
 
@@ -38,7 +37,7 @@ object CreateDataFrame extends Base with Serializable {
 
     // 设置 schema 结构
     val schemaString = "id,name,age"
-    val fields = schemaString.split(",").map(fieldName => StructField(fieldName, StringType, true))
+    val fields = schemaString.split(",").map(fieldName => StructField(fieldName, DataTypes.StringType, true))
     val schema = StructType(fields)
 
     val stuRDD = spark.sparkContext
