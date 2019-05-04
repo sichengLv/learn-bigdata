@@ -1,4 +1,5 @@
-package com.lv;
+
+package com.lv.bigdata.action.service.weblog;
 
 import java.io.*;
 
@@ -55,8 +56,9 @@ public class GenerateLog {
                 // 模拟源源不断地产生日志
                 Thread.sleep(50);
 
-                // 处理中文乱码
-                String line = new String(str.getBytes("UTF8"));
+                // 处理中文乱码, 直接修改源文件编码为UTF-8(另存为)
+//                String line = new String(str.getBytes("UTF-8"));
+                String line = str;
                 System.out.println("row:" + count + " >>>>> " + line);
 
                 // 生成的日志输出到output

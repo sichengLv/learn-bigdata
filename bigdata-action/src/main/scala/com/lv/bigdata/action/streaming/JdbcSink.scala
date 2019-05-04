@@ -28,14 +28,16 @@ class JdbcSink(url: String, user: String, pwd: String) extends ForeachWriter[Row
     val webCount = value.getAs[Long]("webCount")
 
     val querySql = "select * from click_event where topic = '" + topic + "'"
-    val updateSql = "update click_evnet set count = " + webCount + " where topic = '" + topic + "'"
-    val insertSql = "insert into click_event(topic, count)" + " values('" + topic + "," + webCount + ")"
+    val updateSql = "update click_event set count = " + webCount + " where topic = '" + topic + "'"
+    val insertSql = "insert into click_event(topic, count)" + " values('" + topic + "', " + webCount + ")"
 
+    println("=====> query sql: " + querySql)
     val resultSet = statement.executeQuery(querySql)
     try {
       if (resultSet.next()) {
         statement.executeUpdate(updateSql)
       } else {
+        println("=====> insert sql: " + insertSql)
         statement.execute(insertSql)
       }
     } catch {

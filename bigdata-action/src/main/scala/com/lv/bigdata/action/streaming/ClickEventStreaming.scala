@@ -31,14 +31,14 @@ object ClickEventStreaming {
     val df = spark
       .readStream
       .format("kafka")
-      .option("kafka.bootstrap.servers", "mas130:9092")
-      .option("subscribe", "click2")
+      .option("kafka.bootstrap.servers", "mas130:9092,s131:9092")
+      .option("subscribe", "test-flume02")
       .load()
 
     // 将数据转换为 ClickEvent DF
     import spark.implicits._
     val lineDS = df.selectExpr("CAST(value AS STRING)").as[String]
-    val clickEventDS = lineDS.map(_.split(",")).map(x => ClickEvent(x(0), x(1), x(2), x(3), x(4), x(5)))
+    val clickEventDS = lineDS.map(_.split("\\s+")).map(x => ClickEvent(x(0), x(1), x(2), x(3), x(4), x(5)))
     val topicCountDF = clickEventDS.groupBy("queryWord").count().toDF("titleName", "webCount")
 
     /*val query = topicCountDF
@@ -59,7 +59,7 @@ object ClickEventStreaming {
     val topicCount = topicCountDF
       .writeStream
       .foreach(writer)
-      .outputMode("update")
+      .outputMode("complete")
 
     // 阻塞等待程序执行结束
     topicCount.start().awaitTermination()
