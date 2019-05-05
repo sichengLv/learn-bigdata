@@ -10,7 +10,7 @@ angular.module('App', ['ui.bootstrap']).controller('controller_index', ['$scope'
         $scope.start = function () {
             webSocket.send('hello');
             return false;
-        }
+        };
 
         var webSocket = new WebSocket('ws://localhost:8080/websocket');
         var countchart = echarts.init(document.getElementById('count'));
@@ -26,14 +26,13 @@ angular.module('App', ['ui.bootstrap']).controller('controller_index', ['$scope'
         webSocket.onmessage = function (event) {
             var sd = JSON.parse(event.data);
             webcount(sd);
-            webSum(sd.titleSum);
+            webSum(sd.topicSum);
         };
 
         function webcount(json) {
             var option = {
                 title: {
-                    text: '搜狗新闻热点实时统计',
-                    subtext: '作者：刘彦伶'
+                    text: '搜狗新闻热点实时统计'
                 },
                 tooltip: {
                     trigger: 'axis',
@@ -56,13 +55,13 @@ angular.module('App', ['ui.bootstrap']).controller('controller_index', ['$scope'
                 },
                 yAxis: {
                     type: 'category',
-                    data: json.titleName
+                    data: json.topicName
                 },
                 series: [
                     {
                         name: '浏览量',
                         type: 'bar',
-                        data: json.titleCount
+                        data: json.topicCount
                     },
 
                 ]
@@ -76,11 +75,8 @@ angular.module('App', ['ui.bootstrap']).controller('controller_index', ['$scope'
             var option = {
                 backgroundColor: '#fbfbfb',//背景色
                 title: {
-                    text: '搜狗新闻话题总量统计',
-                    subtext: '作者：刘彦伶'
+                    text: '搜狗新闻话题总量统计'
                 },
-
-
                 tooltip: {
                     formatter: "{a} <br/>{b} : {c}%"
                 },
@@ -107,20 +103,19 @@ angular.module('App', ['ui.bootstrap']).controller('controller_index', ['$scope'
 
         $scope.select = function () {
             $http({
-                method: 'POST',
-                url: '/weblogController/webcount',
+                method: 'GET',
+                url: '/dashboard/total',
             }).success(function (response) {
                     console.log(response);
-                    console.log("asa")
 
                     $uibModal.open({
                             templateUrl: 'total.html',
                             controller: function ($scope, $http, $uibModalInstance) {
                                 $scope.totalpeople = function () {
-                                    $scope.people = response.result.data.peoplesum;
+                                    $scope.people = response.result.data.totalQuery;
                                 }
                                 $scope.totalname = function () {
-                                    $scope.name = response.result.data.namesum;
+                                    $scope.name = response.result.data.totalTopic;
                                 }
                                 $scope.cancel = function () {
                                     $uibModalInstance.dismiss();

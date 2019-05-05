@@ -5,6 +5,7 @@ import com.lv.bigdata.action.service.ClickEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,8 @@ public class DashBoardController extends BaseController {
      *
      * @return result
      */
+    @RequestMapping("/total")
+    @ResponseBody
     public Map<String, Object> totalCount() {
         Map<String, Object> map = new HashMap();
 
@@ -43,6 +46,8 @@ public class DashBoardController extends BaseController {
      *
      * @return result
      */
+    @RequestMapping("top")
+    @ResponseBody
     public Map<String, Object> getTopN() {
         int topN = 10;
         final List<ClickEventPO> res = clickEventService.getTopN(topN);

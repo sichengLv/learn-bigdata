@@ -6,8 +6,8 @@
     <resultMap id="BaseResultMap" type="ClickEventPO">
         <id column="id" property="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
         <result column="topic" property="topic" jdbcType="VARCHAR" javaType="java.lang.String"/>
-        <result column="count" property="count" jdbcType="LONG" javaType="java.lang.Long"/>
-        <result column="create_time" property="createTime" jdbcType="LONG" javaType="java.lang.Long"/>
+        <result column="count" property="count" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT" javaType="java.lang.Long"/>
     </resultMap>
 
     <select id="selectTopN" parameterType="java.lang.Integer" resultMap="BaseResultMap">
