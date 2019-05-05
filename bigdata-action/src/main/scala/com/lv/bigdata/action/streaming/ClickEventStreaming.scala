@@ -39,7 +39,7 @@ object ClickEventStreaming {
     import spark.implicits._
     val lineDS = df.selectExpr("CAST(value AS STRING)").as[String]
     val clickEventDS = lineDS.map(_.split("\\s+")).map(x => ClickEvent(x(0), x(1), x(2), x(3), x(4), x(5)))
-    val topicCountDF = clickEventDS.groupBy("queryWord").count().toDF("titleName", "webCount")
+    val topicCountDF = clickEventDS.groupBy("queryWord").count().toDF("topicName", "topicCount")
 
     val url = "jdbc:mysql://localhost:3306/bigdata?useSSL=false"
     val username = "root"

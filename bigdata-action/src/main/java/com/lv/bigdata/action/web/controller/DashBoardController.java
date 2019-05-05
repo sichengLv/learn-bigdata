@@ -2,6 +2,7 @@ package com.lv.bigdata.action.web.controller;
 
 import com.lv.bigdata.action.dao.po.ClickEventPO;
 import com.lv.bigdata.action.service.ClickEventService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/dashboard")
 public class DashBoardController extends BaseController {
+
+    private static final Logger LOGGER = Logger.getLogger(DashBoardController.class);
 
     @Autowired
     private ClickEventService clickEventService;

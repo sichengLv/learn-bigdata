@@ -24,12 +24,12 @@ class JdbcSink(url: String, user: String, pwd: String) extends ForeachWriter[Row
   override def process(value: Row): Unit = {
     println(value)
 
-    val topic = value.getAs[String]("titleName").replaceAll("[\\[\\]]", "")
-    val webCount = value.getAs[Long]("webCount")
+    val topicName = value.getAs[String]("topicName").replaceAll("[\\[\\]]", "")
+    val topicCount = value.getAs[Long]("topicCount")
 
-    val querySql = "select * from click_event where topic = '" + topic + "'"
-    val updateSql = "update click_event set count = " + webCount + " where topic = '" + topic + "'"
-    val insertSql = "insert into click_event(topic, count)" + " values('" + topic + "', " + webCount + ")"
+    val querySql = "select * from click_event where topic = '" + topicName + "'"
+    val updateSql = "update click_event set count = " + topicCount + " where topic = '" + topicName + "'"
+    val insertSql = "insert into click_event(topic, count)" + " values('" + topicName + "', " + topicCount + ")"
 
     println("=====> query sql: " + querySql)
     val resultSet = statement.executeQuery(querySql)
