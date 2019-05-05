@@ -36,4 +36,11 @@ public class ClickEventPO extends BasePO {
         this.count = count;
     }
 
+    @Override
+    public String toString() {
+        return "ClickEventPO{" +
+                "topic='" + topic + '\'' +
+                ", count=" + count +
+                '}';
+    }
 }

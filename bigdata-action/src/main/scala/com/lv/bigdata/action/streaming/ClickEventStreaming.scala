@@ -41,13 +41,6 @@ object ClickEventStreaming {
     val clickEventDS = lineDS.map(_.split("\\s+")).map(x => ClickEvent(x(0), x(1), x(2), x(3), x(4), x(5)))
     val topicCountDF = clickEventDS.groupBy("queryWord").count().toDF("titleName", "webCount")
 
-    /*val query = topicCountDF
-      .writeStream
-      .format("console")
-      .outputMode("complete")
-    query.start().awaitTermination()*/
-
-
     val url = "jdbc:mysql://localhost:3306/bigdata?useSSL=false"
     val username = "root"
     val password = "root"
